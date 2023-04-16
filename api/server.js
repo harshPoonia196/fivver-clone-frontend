@@ -15,10 +15,7 @@ const app = express();
 dotenv.config();
 
 app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy', 
-    "frame-src https://localhost:5173/"
-  );
+  res.setHeader("Content-Security-Policy", "frame-src https://localhost:5173/");
   next();
 });
 
@@ -33,9 +30,13 @@ const connect = async () => {
   }
 };
 
-
-
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

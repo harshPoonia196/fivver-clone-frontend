@@ -2,8 +2,11 @@ import Gig from "../models/gig.model.js";
 import createError from "../utils/createError.js";
 
 export const createGig = async (req, res, next) => {
-  if (!req.isSeller)
-    return next(createError(403, "Only sellers can create a gig!"));
+  console.log("inside createGig ===========>", req.body);
+
+  //! what is the point of the following "if" condition if the option of creating gigs is only available for sellers
+  // if (!req.isSeller)
+  //   return next(createError(403, "Only sellers can create a gig!"));
 
   const newGig = new Gig({
     userId: req.userId,
@@ -31,6 +34,7 @@ export const deleteGig = async (req, res, next) => {
 };
 export const getGig = async (req, res, next) => {
   try {
+    console.log(" ===========>");
     const gig = await Gig.findById(req.params.id);
     if (!gig) next(createError(404, "Gig not found!"));
     res.status(200).send(gig);
@@ -40,6 +44,7 @@ export const getGig = async (req, res, next) => {
 };
 export const getGigs = async (req, res, next) => {
   const q = req.query;
+  console.log("q ===========>", q);
   const filters = {
     ...(q.userId && { userId: q.userId }),
     ...(q.cat && { cat: q.cat }),
@@ -49,7 +54,7 @@ export const getGigs = async (req, res, next) => {
         ...(q.max && { $lt: q.max }),
       },
     }),
-    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+    ...(q.search && { cat: { $regex: q.search, $options: "i" } }),
   };
   try {
     const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });

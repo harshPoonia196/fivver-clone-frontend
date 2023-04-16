@@ -1,20 +1,39 @@
 import React from "react";
 import "./Home.scss";
 import Featured from "../../components/featured/Featured";
-import TrustedBy from "../../components/trustedBy/TrustedBy";
 import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 
 function Home() {
+  const data = { lastSeen: new Date(new Date().getTime()) };
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const _id = currentUser?._id;
+
+  useQuery({
+    queryKey: ["updateLastSeen"],
+    queryFn: () =>
+      newRequest.post(`/users/${_id}`, data).then((res) => {
+        const { authToken } = JSON.parse(localStorage.getItem("currentUser"));
+
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({ ...res.data, authToken })
+        );
+        return res.data;
+      }),
+  });
+
   return (
     <div className="home">
       <Featured />
-      <TrustedBy />
       <Slide slidesToShow={5} arrowsScroll={5}>
         {cards.map((card) => (
-          <CatCard key={card.id} card={card} />
+          <CatCard to={card.to} key={card.id} card={card} />
         ))}
       </Slide>
       <div className="features">
@@ -55,7 +74,15 @@ function Home() {
             </p>
           </div>
           <div className="item">
-            <video src="./img/video.mp4" controls />
+            {/* <video src="./img/video.mp4" controls /> */}
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/BadB1z-V_qU?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=1"
+              title="YouTube video player"
+              allow=" accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>
@@ -69,7 +96,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Graphics & Design</span>
+              <span>Graphics & Design (Soon)</span>
             </div>
             <div className="item">
               <img
@@ -86,7 +113,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Writing & Translation</span>
+              <span>Writing & Translation(Soon)</span>
             </div>
             <div className="item">
               <img
@@ -94,7 +121,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Video & Animation</span>
+              <span>Video & Animation(Soon)</span>
             </div>
             <div className="item">
               <img
@@ -102,7 +129,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Music & Audio</span>
+              <span>Music & Audio(Soon)</span>
             </div>
             <div className="item">
               <img
@@ -110,7 +137,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Programming & Tech</span>
+              <span>Web Development</span>
             </div>
             <div className="item">
               <img
@@ -118,7 +145,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Business</span>
+              <span>Business(Soon)</span>
             </div>
             <div className="item">
               <img
@@ -126,7 +153,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Lifestyle</span>
+              <span>Lifestyle(Soon)</span>
             </div>
             <div className="item">
               <img
@@ -134,7 +161,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Data</span>
+              <span>SEO</span>
             </div>
             <div className="item">
               <img
@@ -142,7 +169,7 @@ function Home() {
                 alt=""
               />
               <div className="line"></div>
-              <span>Photography</span>
+              <span>Photography(Soon)</span>
             </div>
           </div>
         </div>
@@ -151,7 +178,7 @@ function Home() {
         <div className="container">
           <div className="item">
             <h1>
-              fiverr <i>business</i>
+              MHSSCE SP <i>business</i>
             </h1>
             <h1>
               A business solution designed for <i>teams</i>
@@ -174,7 +201,6 @@ function Home() {
               <img src="./img/check.png" alt="" />
               Manage teamwork and boost productivity with one powerful workspace
             </div>
-            <button>Explore Fiverr Business</button>
           </div>
           <div className="item">
             <img

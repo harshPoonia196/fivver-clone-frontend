@@ -1,42 +1,36 @@
 import React, { useState } from "react";
 import "./Featured.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Featured() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    navigate(`/gigs?search=${input}`);
+  const handleSubmit = (fromPopular) => {
+    navigate(`/gigs?search=${input || fromPopular}`);
   };
   return (
     <div className="featured">
-      <div className="container">
-        <div className="left">
-          <h1>
-            Find the perfect <span>freelance</span> services for your business
-          </h1>
-          <div className="search">
-            <div className="searchInput">
-              <img src="./img/search.png" alt="" />
-              <input
-                type="text"
-                placeholder='Try "building mobil app"'
-                onChange={(e) => setInput(e.target.value)}
-              />
-            </div>
+      <div className="textContainer">
+        <h1>
+          Find the perfect <span>freelance</span> services for your business
+        </h1>
+        <div className="search">
+          <div className="searchInput">
+            <img src="./img/search.png" alt="" />
+            <input
+              type="text"
+              placeholder='Try "building mobil app"'
+              onChange={(e) => setInput(e.target.value)}
+            />
             <button onClick={handleSubmit}>Search</button>
           </div>
-          <div className="popular">
-            <span>Popular:</span>
-            <button>Web Design</button>
-            <button>WordPress</button>
-            <button>Logo Design</button>
-            <button>AI Services</button>
-          </div>
         </div>
-        <div className="right">
-          <img src="./img/man.png" alt="" />
+        <div className="popular">
+          <span>Popular:</span>
+          <button onClick={() => handleSubmit("web")}>Web Development</button>
+          <button onClick={() => handleSubmit("app")}>App Development</button>
+          <button onClick={() => handleSubmit("seo")}>SEO</button>
         </div>
       </div>
     </div>
@@ -44,4 +38,3 @@ function Featured() {
 }
 
 export default Featured;
-

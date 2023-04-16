@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #013914;
+  background-color: rgb(255, 229, 1);
   color: white;
   position: sticky;
   top: 0;
@@ -15,8 +15,8 @@
 
     button {
       background-color: white !important;
-      color: #1dbf73 !important;
-      border: 1px solid #1dbf73 !important;
+      color: rgb(255, 229, 1) !important;
+      border: 1px solid rgb(255, 229, 1) !important;
     }
   }
 
@@ -36,7 +36,7 @@
 
       .dot {
         font-weight: bold;
-        color: #1dbf73;
+        color: rgb(255, 229, 1);
       }
     }
     .links {
@@ -108,8 +108,6 @@
   .menu {
     width: 1400px;
     padding: 10px 0px;
-    display: flex;
-    justify-content: space-between;
     color: gray;
     font-weight: 300;
     font-family: "Montserrat", sans-serif;

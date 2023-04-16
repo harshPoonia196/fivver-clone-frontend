@@ -5,10 +5,12 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import { timeDiffCalc } from "../../utils/upload";
 
 function Gig() {
   const { id } = useParams();
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
     queryFn: () =>
@@ -31,7 +33,6 @@ function Gig() {
       }),
     enabled: !!userId,
   });
-
   return (
     <div className="gig">
       {isLoading ? (
@@ -42,7 +43,7 @@ function Gig() {
         <div className="container">
           <div className="left">
             <span className="breadcrumbs">
-              Fiverr {">"} Graphics & Design {">"}
+              MHSSCE SP {">"} Graphics & Design {">"}
             </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
@@ -99,7 +100,9 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    <button>Contact Me</button>
+                    <Link to={`/message/${userId}`}>
+                      <button>Contact Me</button>
+                    </Link>
                   </div>
                 </div>
                 <div className="box">
@@ -110,11 +113,15 @@ function Gig() {
                     </div>
                     <div className="item">
                       <span className="title">Member since</span>
-                      <span className="desc">Aug 2022</span>
+                      <span className="desc">
+                        {currentUser.createdAt.slice(0, 10)}
+                      </span>
                     </div>
                     <div className="item">
                       <span className="title">Avg. response time</span>
-                      <span className="desc">4 hours</span>
+                      <span className="desc">
+                        {timeDiffCalc(currentUser.lastSeen)}
+                      </span>
                     </div>
                     <div className="item">
                       <span className="title">Last delivery</span>
@@ -135,7 +142,7 @@ function Gig() {
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
-              <h2>$ {data.price}</h2>
+              <h2>{data.price} Rs</h2>
             </div>
             <p>{data.shortDesc}</p>
             <div className="details">
@@ -157,7 +164,7 @@ function Gig() {
               ))}
             </div>
             <Link to={`/pay/${id}`}>
-            <button>Continue</button>
+              <button>Continue</button>
             </Link>
           </div>
         </div>

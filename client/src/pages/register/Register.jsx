@@ -38,7 +38,7 @@ function Register() {
         ...user,
         img: url,
       });
-      navigate("/")
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -49,30 +49,15 @@ function Register() {
         <div className="left">
           <h1>Create a new account</h1>
           <label htmlFor="">Username</label>
-          <input
-            name="username"
-            type="text"
-            placeholder="johndoe"
-            onChange={handleChange}
-          />
+          <input name="username" type="text" onChange={handleChange} />
           <label htmlFor="">Email</label>
-          <input
-            name="email"
-            type="email"
-            placeholder="email"
-            onChange={handleChange}
-          />
+          <input name="email" type="email" onChange={handleChange} />
           <label htmlFor="">Password</label>
           <input name="password" type="password" onChange={handleChange} />
           <label htmlFor="">Profile Picture</label>
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           <label htmlFor="">Country</label>
-          <input
-            name="country"
-            type="text"
-            placeholder="Usa"
-            onChange={handleChange}
-          />
+          <input name="country" type="text" onChange={handleChange} />
           <button type="submit">Register</button>
         </div>
         <div className="right">

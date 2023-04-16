@@ -2,24 +2,25 @@ import createError from "../utils/createError.js";
 import Order from "../models/order.model.js";
 import Gig from "../models/gig.model.js";
 import Stripe from "stripe";
+
 export const intent = async (req, res, next) => {
+  const { id: buyerId } = req.params;
   const stripe = new Stripe(process.env.STRIPE);
 
   const gig = await Gig.findById(req.params.id);
+  const price = gig.price * 100;
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: gig.price * 100,
-    currency: "usd",
-    automatic_payment_methods: {
-      enabled: true,
-    },
+    amount: price,
+    currency: "INR",
+    payment_method_types: ["card"],
   });
 
   const newOrder = new Order({
     gigId: gig._id,
     img: gig.cover,
     title: gig.title,
-    buyerId: req.userId,
+    buyerId,
     sellerId: gig.userId,
     price: gig.price,
     payment_intent: paymentIntent.id,
@@ -33,9 +34,10 @@ export const intent = async (req, res, next) => {
 };
 
 export const getOrders = async (req, res, next) => {
+  const { userId, isSeller } = req.body;
   try {
     const orders = await Order.find({
-      ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
+      ...(isSeller ? { sellerId: userId } : { buyerId: userId }),
       isCompleted: true,
     });
 
@@ -46,7 +48,7 @@ export const getOrders = async (req, res, next) => {
 };
 export const confirm = async (req, res, next) => {
   try {
-    const orders = await Order.findOneAndUpdate(
+    await Order.findOneAndUpdate(
       {
         payment_intent: req.body.payment_intent,
       },

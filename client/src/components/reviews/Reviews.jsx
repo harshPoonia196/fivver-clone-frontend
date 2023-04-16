@@ -3,9 +3,11 @@ import React from "react";
 import newRequest from "../../utils/newRequest";
 import Review from "../review/Review";
 import "./Reviews.scss";
-const Reviews = ({ gigId }) => {
 
-  const queryClient = useQueryClient()
+const Reviews = ({ gigId }) => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
     queryKey: ["reviews"],
     queryFn: () =>
@@ -18,16 +20,18 @@ const Reviews = ({ gigId }) => {
     mutationFn: (review) => {
       return newRequest.post("/reviews", review);
     },
-    onSuccess:()=>{
-      queryClient.invalidateQueries(["reviews"])
-    }
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reviews"]);
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const desc = e.target[0].value;
     const star = e.target[1].value;
-    mutation.mutate({ gigId, desc, star });
+
+    const apiData = { userId: currentUser._id, gigId, desc, star };
+    mutation.mutate(apiData);
   };
 
   return (

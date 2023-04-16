@@ -32,6 +32,8 @@ const Message = () => {
     mutation.mutate({
       conversationId: id,
       desc: e.target[0].value,
+      userId: currentUser._id,
+      isSeller: currentUser.isSeller,
     });
     e.target[0].value = "";
   };
@@ -40,7 +42,7 @@ const Message = () => {
     <div className="message">
       <div className="container">
         <span className="breadcrumbs">
-          <Link to="/messages">Messages</Link> {">"} John Doe {">"}
+          <Link to="/messages">Messages</Link>
         </span>
         {isLoading ? (
           "loading"
@@ -48,8 +50,11 @@ const Message = () => {
           "error"
         ) : (
           <div className="messages">
-            {data.map((m) => (
-              <div className={m.userId === currentUser._id ? "owner item" : "item"} key={m._id}>
+            {data?.map((m) => (
+              <div
+                className={m.userId === currentUser._id ? "owner item" : "item"}
+                key={m._id}
+              >
                 <img
                   src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
                   alt=""

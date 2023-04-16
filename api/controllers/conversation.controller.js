@@ -2,12 +2,15 @@ import createError from "../utils/createError.js";
 import Conversation from "../models/conversation.model.js";
 
 export const createConversation = async (req, res, next) => {
+  // const { isSeller, userId, to } = req.body;
+  const { isSeller, userId, to } = req.body;
+
   const newConversation = new Conversation({
-    id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
-    sellerId: req.isSeller ? req.userId : req.body.to,
-    buyerId: req.isSeller ? req.body.to : req.userId,
-    readBySeller: req.isSeller,
-    readByBuyer: !req.isSeller,
+    id: userId + to,
+    sellerId: isSeller ? userId : to,
+    buyerId: isSeller ? to : userId,
+    readBySeller: isSeller,
+    readByBuyer: !isSeller,
   });
 
   try {
@@ -40,7 +43,10 @@ export const updateConversation = async (req, res, next) => {
 
 export const getSingleConversation = async (req, res, next) => {
   try {
-    const conversation = await Conversation.findOne({ id: req.params.id });
+    const { id } = req.params;
+    const conversation = await Conversation.findOne({ id: id });
+    console.log("getSingleConversation ===========>", conversation);
+
     if (!conversation) return next(createError(404, "Not found!"));
     res.status(200).send(conversation);
   } catch (err) {
@@ -50,9 +56,14 @@ export const getSingleConversation = async (req, res, next) => {
 
 export const getConversations = async (req, res, next) => {
   try {
+    const { isSeller, userId } = req.body;
+    console.log(" req.body ===========>", req.body);
     const conversations = await Conversation.find(
-      req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }
-    ).sort({ updatedAt: -1 });
+      isSeller ? { sellerId: userId } : { buyerId: userId }
+      // ).sort({ updatedAt: -1 });
+    );
+    console.log("conversations ===========>", conversations);
+
     res.status(200).send(conversations);
   } catch (err) {
     next(err);
