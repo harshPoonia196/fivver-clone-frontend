@@ -5,25 +5,26 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     email: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     password: {
-      type: String,
-      required: true,
-    },
-    img: {
       type: String,
       required: false,
     },
     country: {
       type: String,
-      required: true,
+      required: false,
+    },
+
+    img: {
+      type: String,
+      required: false,
     },
     phone: {
       type: String,
@@ -36,10 +37,12 @@ const userSchema = new Schema(
     isSeller: {
       type: Boolean,
       default: false,
+      required: false,
     },
     lastSeen: {
       type: String,
       default: "",
+      required: false,
     },
   },
   {

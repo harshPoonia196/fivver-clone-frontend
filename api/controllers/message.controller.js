@@ -12,7 +12,7 @@ export const createMessage = async (req, res, next) => {
   try {
     const savedMessage = await newMessage.save();
 
-    const temp = await Conversation.findOneAndUpdate(
+    await Conversation.findOneAndUpdate(
       { id: conversationId },
       {
         $set: {

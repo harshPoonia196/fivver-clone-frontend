@@ -15,8 +15,6 @@ newRequest.interceptors.request.use(
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const authToken = currentUser?.authToken;
 
-    console.log("===========>", authToken);
-
     if (!authRoutes && request.headers && authToken) {
       request.headers.Authorization = `Bearer ${authToken}`;
     }

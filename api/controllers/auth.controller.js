@@ -5,25 +5,23 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {
-    const hash = bcrypt.hashSync(req.body.password, 5);
-    const newUser = new User({
-      ...req.body,
-      password: hash,
-    });
+    const data = req.body;
+    const hashPassword = bcrypt.hashSync(data.password, 5);
+    await User.create({ ...data, password: hashPassword });
 
-    await newUser.save();
     res.status(201).send("User has been created.");
   } catch (err) {
     next(err);
   }
 };
 export const login = async (req, res, next) => {
+  const { username, password } = req.body;
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username });
 
     if (!user) return next(createError(404, "User not found!"));
 
-    const isCorrect = bcrypt.compareSync(req.body.password, user.password);
+    const isCorrect = bcrypt.compareSync(password, user.password);
     if (!isCorrect)
       return next(createError(400, "Wrong password or username!"));
 

@@ -22,7 +22,7 @@ export const updateUser = async (req, res, next) => {
   const { lastSeen } = req.body;
   const user = await User.findByIdAndUpdate(id, { lastSeen }, { new: true });
 
-  delete user.password;
+  // delete user.password;
 
   res.status(200).send(user);
 };

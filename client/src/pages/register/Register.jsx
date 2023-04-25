@@ -14,6 +14,7 @@ function Register() {
     country: "",
     isSeller: false,
     desc: "",
+    lastSeen: "",
   });
 
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function Register() {
         ...user,
         img: url,
       });
+
       navigate("/");
     } catch (err) {
       console.log(err);

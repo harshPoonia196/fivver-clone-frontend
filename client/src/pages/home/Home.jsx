@@ -10,23 +10,24 @@ import newRequest from "../../utils/newRequest";
 
 function Home() {
   const data = { lastSeen: new Date(new Date().getTime()) };
-
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const _id = currentUser?._id;
 
-  useQuery({
-    queryKey: ["updateLastSeen"],
-    queryFn: () =>
-      newRequest.post(`/users/${_id}`, data).then((res) => {
-        const { authToken } = JSON.parse(localStorage.getItem("currentUser"));
+  if (currentUser !== null) {
+    const { _id } = currentUser;
+    useQuery({
+      queryKey: ["updateLastSeen"],
+      queryFn: () =>
+        newRequest.post(`/users/${_id}`, data).then((res) => {
+          const { authToken } = JSON.parse(localStorage.getItem("currentUser"));
 
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({ ...res.data, authToken })
-        );
-        return res.data;
-      }),
-  });
+          localStorage.setItem(
+            "currentUser",
+            JSON.stringify({ ...res.data, authToken })
+          );
+          return res.data;
+        }),
+    });
+  }
 
   return (
     <div className="home">
