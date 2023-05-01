@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -59,8 +60,7 @@ const CheckoutForm = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:5173/success",
+        return_url: "http://127.0.0.1:5173/success",
       },
     });
 

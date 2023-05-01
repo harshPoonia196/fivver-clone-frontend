@@ -7,6 +7,7 @@ import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+import Navbar from "../../components/navbar/Navbar";
 
 function Home() {
   const data = { lastSeen: new Date(new Date().getTime()) };
@@ -40,7 +41,7 @@ function Home() {
       <div className="features">
         <div className="container">
           <div className="item">
-            <h1>A whole world of freelance talent at your fingertips</h1>
+            <h1>A whole world of Vendor talent at your fingertips</h1>
             <div className="title">
               <img src="./img/check.png" alt="" />
               The best for every budget
@@ -54,7 +55,7 @@ function Home() {
               Quality work done quickly
             </div>
             <p>
-              Find the right freelancer to begin working on your project within
+              Find the right Vendor to begin working on your project within
               minutes.
             </p>
             <div className="title">
@@ -178,11 +179,9 @@ function Home() {
       <div className="features dark">
         <div className="container">
           <div className="item">
+            <h1>MHSSCE SP</h1>
             <h1>
-              MHSSCE SP <i>business</i>
-            </h1>
-            <h1>
-              A business solution designed for <i>teams</i>
+              A solution designed for <i>business</i>
             </h1>
             <p>
               Upgrade to a curated experience packed with tools and benefits,
@@ -190,7 +189,7 @@ function Home() {
             </p>
             <div className="title">
               <img src="./img/check.png" alt="" />
-              Connect to freelancers with proven business experience
+              Connect to Vendor with proven business experience
             </div>
 
             <div className="title">

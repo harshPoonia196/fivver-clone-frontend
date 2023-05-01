@@ -33,6 +33,7 @@ function Gig() {
       }),
     enabled: !!userId,
   });
+
   return (
     <div className="gig">
       {isLoading ? (

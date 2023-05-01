@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Featured.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Featured() {
   const [input, setInput] = useState("");
@@ -13,7 +13,7 @@ function Featured() {
     <div className="featured">
       <div className="textContainer">
         <h1>
-          Find the perfect <span>freelance</span> services for your business
+          Find the perfect <span>Vendor</span> services for your business
         </h1>
         <div className="search">
           <div className="searchInput">

@@ -26,6 +26,7 @@ const Orders = () => {
       const res = await newRequest.get(`/conversations/single/${id}`);
       navigate(`/message/${res.data.id}`);
     } catch (err) {
+      console.log("in error 404 ===========>");
       if (err.response.status === 404) {
         const createConversation = {
           isSeller: currentUser.isSeller,
@@ -38,11 +39,13 @@ const Orders = () => {
             ...createConversation,
           })
           .then((res) => {
+            console.log(" res from  createConversation===========>", res);
             navigate(`/message/${res.data.id}`);
           });
       }
     }
   };
+
   return (
     <div className="orders">
       {isLoading ? (

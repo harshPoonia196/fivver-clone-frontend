@@ -9,10 +9,9 @@ const Messages = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const queryClient = useQueryClient();
-
   const apiData = { userId: currentUser._id, isSeller: currentUser.isSeller };
 
-  const { isLoading, error, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["conversations"],
 
     queryFn: () =>
@@ -36,11 +35,6 @@ const Messages = () => {
 
   return (
     <div className="messages">
-      {/* {isLoading ? (
-        "loading"
-      ) : error ? (
-        "error"
-      ) : ( */}
       <div className="container">
         <div className="title">
           <h1>Messages</h1>
@@ -78,7 +72,6 @@ const Messages = () => {
           ))}
         </table>
       </div>
-      {/* )} */}
     </div>
   );
 };

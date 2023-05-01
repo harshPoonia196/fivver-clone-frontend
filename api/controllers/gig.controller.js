@@ -7,15 +7,12 @@ export const createGig = async (req, res, next) => {
   //! what is the point of the following "if" condition if the option of creating gigs is only available for sellers
   // if (!req.isSeller)
   //   return next(createError(403, "Only sellers can create a gig!"));
-
-  const newGig = new Gig({
-    userId: req.userId,
-    ...req.body,
-  });
-
   try {
-    const savedGig = await newGig.save();
-    res.status(201).json(savedGig);
+    const newGig = await Gig.create({
+      ...req.body,
+    });
+
+    res.status(201).json(newGig);
   } catch (err) {
     next(err);
   }

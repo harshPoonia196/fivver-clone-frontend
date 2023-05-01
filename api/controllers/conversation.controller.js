@@ -5,17 +5,18 @@ export const createConversation = async (req, res, next) => {
   // const { isSeller, userId, to } = req.body;
   const { isSeller, userId, to } = req.body;
 
-  const newConversation = new Conversation({
-    id: userId + to,
-    sellerId: isSeller ? userId : to,
-    buyerId: isSeller ? to : userId,
-    readBySeller: isSeller,
-    readByBuyer: !isSeller,
-  });
+  console.log("req.body from create conv ===========>", req.body);
 
   try {
-    const savedConversation = await newConversation.save();
-    res.status(201).send(savedConversation);
+    const newConversation = await Conversation.create({
+      id: userId + to,
+      sellerId: isSeller ? userId : to,
+      buyerId: isSeller ? to : userId,
+      readBySeller: isSeller,
+      readByBuyer: !isSeller,
+    });
+
+    res.status(201).send(newConversation);
   } catch (err) {
     next(err);
   }
@@ -57,12 +58,12 @@ export const getSingleConversation = async (req, res, next) => {
 export const getConversations = async (req, res, next) => {
   try {
     const { isSeller, userId } = req.body;
+
     console.log(" req.body ===========>", req.body);
+
     const conversations = await Conversation.find(
       isSeller ? { sellerId: userId } : { buyerId: userId }
-      // ).sort({ updatedAt: -1 });
     );
-    console.log("conversations ===========>", conversations);
 
     res.status(200).send(conversations);
   } catch (err) {
