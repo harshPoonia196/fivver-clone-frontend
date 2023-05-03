@@ -44,7 +44,7 @@ function Gigs() {
     <div className="gigs">
       <div className="container">
         <p>
-          Explore the boundaries of art and technology with MHSSCE SP's AI
+          Explore the boundaries of art and technology with MHSSCE SPs AI
           artists
         </p>
         <div className="menu">
