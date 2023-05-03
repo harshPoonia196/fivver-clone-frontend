@@ -17,7 +17,7 @@ import "./app.scss";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Pay from "./pages/pay/Pay";
 import Success from "./pages/success/Success";
-import ProfilePage from "./pages/profilePage/profilePage";
+import ProfilePage from "./pages/profilePage/ProfilePage";
 function App() {
   const queryClient = new QueryClient();
 
