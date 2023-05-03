@@ -3,9 +3,9 @@ import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import newRequest from "../../utils/newRequest";
-import Reviews from "../../components/reviews/Reviews";
-import { timeDiffCalc } from "../../utils/upload";
+import newRequest from "../../utils/newRequest.js";
+import Reviews from "../../components/reviews/Reviews.jsx";
+import { timeDiffCalc } from "../../utils/upload.js";
 
 function Gig() {
   const { id } = useParams();

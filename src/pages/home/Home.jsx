@@ -1,13 +1,13 @@
 import React from "react";
 import "./Home.scss";
-import Featured from "../../components/featured/Featured";
-import Slide from "../../components/slide/Slide";
-import CatCard from "../../components/catCard/CatCard";
-import ProjectCard from "../../components/projectCard/ProjectCard";
-import { cards, projects } from "../../data";
+import Featured from "../../components/featured/Featured.jsx";
+import Slide from "../../components/slide/Slide.jsx";
+import CatCard from "../../components/catCard/CatCard.jsx";
+import ProjectCard from "../../components/projectCard/ProjectCard.jsx";
+import { cards, projects } from "../../data.js";
 import { useQuery } from "@tanstack/react-query";
-import newRequest from "../../utils/newRequest";
-import Navbar from "../../components/navbar/Navbar";
+import newRequest from "../../utils/newRequest.js";
+import Navbar from "../../components/navbar/Navbar.jsx";
 
 function Home() {
   const data = { lastSeen: new Date(new Date().getTime()) };
